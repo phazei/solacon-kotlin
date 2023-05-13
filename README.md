@@ -1,3 +1,8 @@
+# solacon for Kotlin Android
+
+Full credit to [naknomum](https://github.com/naknomum/solacon) who created the original JS version.  I just converted it to
+java with a little AI assistance.
+
 # solacon
 
 A *solacon* is a variation of an [identicon](https://en.wikipedia.org/wiki/Identicon), in the form of a solar/spiral/floral shape.
@@ -12,32 +17,29 @@ that is embedding the svg.
 
 ## Example
 
+Original javascript demo:
 Try out some [dynamical examples](https://naknomum.github.io/solacon-example/) of **solacons** in action.
+
+Java implementation looks identical
 
 
 ## Usage
 
-```javascript
-<object type="image/svg+xml" style="width: 500px; height: 500px;" id="svg-obj"
-	data="solacon.svg"
-	data-value="Hello world."
-	data-rgb="0, 30, 255"
-></object>
+```Kotlin
+val solaconGenerator = Solacon()
 
-
-// the parent document can alter the solacon
-var svgObj = document.getElementById('svg-obj');
-svgObj.setRGB('100, 150, 200');
-svgObj.generate('some new value');
-svgObj.setRGB();         // random color
-svgObj.generate();       // random seed value
-svgObj.setRGBFromHash(); // color is based off hashValue (default behavior)
-svgObj.refresh();        // applies color change to current shape
+solacon = view.findViewById(R.id.solacon)
+solacon.setOnClickListener { view ->
+    val hash = java.util.UUID.randomUUID().toString()
+    val size = 512 // desired size of the identicon in pixels
+    //3rd parameter is an optional color, must be formatted: "#XXXXXX"
+    val solaconBitmap = solaconGenerator.generateBitmap(hash, size)
+    solacon.setImageBitmap(solaconBitmap)
+}
+solacon.performClick()
 ```
 
 ## Similar projects
-
-Another identicon project of mine, [Hexicon.js](https://github.com/naknomum/hexicon).
 
 For related work, check out [Awesome Identicons](https://github.com/drhus/awesome-identicons), a curated list of _visual hashes_ maintained by **Husam ABBOUD**.
 
